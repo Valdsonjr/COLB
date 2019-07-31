@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="T:API.Controllers.ODataQueriesController">
+            <summary>
+            Endpoints OData (classe temporária até controllers OData aparecerem no swagger)
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ODataQueriesController.#ctor(Services.Abstract.IRequisicaoService,Services.Abstract.IOrdemDeLiberacaoService,Services.Abstract.ISolucaoService,Services.Abstract.IProjetoService)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="requisicaoService"></param>
+            <param name="ordemDeLiberacaoService"></param>
+            <param name="solucaoService"></param>
+            <param name="projetoService"></param>
+        </member>
+        <member name="M:API.Controllers.ODataQueriesController.GetRequisicoes">
+            <summary>
+            OData a partir das requisições
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ODataQueriesController.GetProjetos">
+            <summary>
+            OData a partir dos projetos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ODataQueriesController.GetSolucoes">
+            <summary>
+            OData a partir das soluções
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.ODataQueriesController.GetOrdensDeLiberacao">
+            <summary>
+            OData a partir das ordens de liberação
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:API.Controllers.OrdensDeLiberacaoController">
+            <summary>
+            Endpoints relacionados a ordens de liberação
+            </summary>
+        </member>
+        <member name="M:API.Controllers.OrdensDeLiberacaoController.#ctor(Services.Abstract.IOrdemDeLiberacaoService)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="ordemDeLiberacaoService"></param>
+        </member>
+        <member name="T:API.Controllers.ProjetosController">
+            <summary>
+            Endpoints relacionados aos projetos do Visual Studio
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ProjetosController.#ctor(Services.Abstract.IProjetoService)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="projetoService"></param>
+        </member>
+        <member name="T:API.Controllers.RequisicoesController">
+            <summary>
+            Endpoints relacionados a requisições de mudanças, incidentes e pequenos projetos.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.RequisicoesController.#ctor(Services.Abstract.IRequisicaoService,Microsoft.Extensions.Logging.ILogger{API.Controllers.RequisicoesController})">
+            <summary>
+            
+            </summary>
+            <param name="requisicaoService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:API.Controllers.RequisicoesController.Post(Services.Models.PostRequisicaoModel)">
+            <summary>
+            Cadastra uma nova requisição
+            </summary>
+            <param name="requisicao"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API.Controllers.SolucoesController">
+            <summary>
+            Endpoints relacionados a soluções do Visual Studio
+            </summary>
+        </member>
+        <member name="M:API.Controllers.SolucoesController.#ctor(Services.Abstract.ISolucaoService)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="solucaoService"></param>
+        </member>
+        <member name="T:API.Program">
+            <summary>
+            Program
+            </summary>
+        </member>
+        <member name="M:API.Program.Main(System.String[])">
+            <summary>
+            Main
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:API.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            CreateWebHostBuilder
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API.Startup">
+            <summary>
+            Classe de Startup
+            </summary>
+        </member>
+        <member name="M:API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:API.Startup.Configuration">
+            <summary>
+            Configuração
+            </summary>
+        </member>
+        <member name="M:API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            This method gets called by the runtime. Use this method to add services to the container.
+        </member>
+        <member name="M:API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        </member>
+    </members>
+</doc>

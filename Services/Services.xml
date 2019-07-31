@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Services</name>
+    </assembly>
+    <members>
+        <member name="T:Services.Abstract.IOrdemDeLiberacaoService">
+            <summary>
+            Interface para serviços de ordens de liberação
+            </summary>
+        </member>
+        <member name="M:Services.Abstract.IOrdemDeLiberacaoService.Obter">
+            <summary>
+            Serviço para obter as ordens de liberação cadastradas
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Abstract.IProjetoService">
+            <summary>
+            Interface para serviços de projetos do Visual Studio 
+            </summary>
+        </member>
+        <member name="M:Services.Abstract.IProjetoService.Obter">
+            <summary>
+            Serviço para obter projetos do Visual Studio
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Abstract.IRequisicaoService">
+            <summary>
+            Interface para serviços de requisições
+            </summary>
+        </member>
+        <member name="M:Services.Abstract.IRequisicaoService.Obter">
+            <summary>
+            Serviço de obter requisições
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Services.Abstract.IRequisicaoService.Inserir(Services.Models.PostRequisicaoModel)">
+            <summary>
+            Serviço de cadastrar novas requisições
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Abstract.ISolucaoService">
+            <summary>
+            Interface para serviços de soluções
+            </summary>
+        </member>
+        <member name="M:Services.Abstract.ISolucaoService.Obter">
+            <summary>
+            Serviço de obter soluções
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Concrete.OrdemDeLiberacaoService">
+            <summary>
+            Serviços relacionados a ordens de liberação
+            </summary>
+        </member>
+        <member name="M:Services.Concrete.OrdemDeLiberacaoService.#ctor(DataAccess.Context)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Services.Concrete.OrdemDeLiberacaoService.Obter">
+            <summary>
+            Obtém todas as ordens de liberação cadastradas
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Concrete.ProjetoService">
+            <summary>
+            Serviços relacionados a projetos do Visual Studio
+            </summary>
+        </member>
+        <member name="M:Services.Concrete.ProjetoService.#ctor(DataAccess.Context)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Services.Concrete.ProjetoService.Obter">
+            <summary>
+            Obtém todos os projetos cadastrados
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Concrete.RequisicaoService">
+            <summary>
+            Serviços relacionados a requisições
+            </summary>
+        </member>
+        <member name="M:Services.Concrete.RequisicaoService.#ctor(DataAccess.Context)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Services.Concrete.RequisicaoService.Obter">
+            <summary>
+            Obtém todas as requisições
+            </summary>
+            <returns>Lista de requisições</returns>
+        </member>
+        <member name="M:Services.Concrete.RequisicaoService.Inserir(Services.Models.PostRequisicaoModel)">
+            <summary>
+            Cadastra uma nova requisição
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Concrete.SolucaoService">
+            <summary>
+            Serviços relacionados a soluções do Visual Studio
+            </summary>
+        </member>
+        <member name="M:Services.Concrete.SolucaoService.#ctor(DataAccess.Context)">
+            <summary>
+            Construtor 
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Services.Concrete.SolucaoService.Obter">
+            <summary>
+            Obtém todas as soluções cadastradas
+            </summary>
+            <returns>Lista de soluções</returns>
+        </member>
+        <member name="T:Services.Models.PostRequisicaoModel">
+            <summary>
+            Model para cadastro de nova requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostRequisicaoModel.NrRequisicao">
+            <summary>
+            Número da requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostRequisicaoModel.DsRequisicao">
+            <summary>
+            Descrição da requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostRequisicaoModel.DtSolicitacao">
+            <summary>
+            Data de criação da requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostRequisicaoModel.NmSolicitante">
+            <summary>
+            Nome do solicitante
+            </summary>
+        </member>
+    </members>
+</doc>

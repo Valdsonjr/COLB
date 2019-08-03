@@ -41,8 +41,7 @@ namespace API
             }
             catch (ApiException ex)
             {
-                if (!String.IsNullOrWhiteSpace(ex.LogInfo))
-                    logger.LogWarning(ex.LogInfo);
+                logger.LogWarning(String.Join('\n', ex.ValidationErrors));
 
                 await HandleExceptionAsync(httpContext, ex);
             }

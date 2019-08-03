@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using Services.Models;
 using System.Linq;
 
 namespace Services.Abstract
@@ -12,6 +12,6 @@ namespace Services.Abstract
         /// Serviço para obter as ordens de liberação cadastradas
         /// </summary>
         /// <returns></returns>
-        IQueryable<OrdemDeLiberacao> Obter();
+        IQueryable<GetOrdemDeLiberacaoModel> Obter();
     }
 }

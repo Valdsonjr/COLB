@@ -60,53 +60,44 @@
             Serviços relacionados a ordens de liberação
             </summary>
         </member>
-        <member name="M:Services.Concrete.OrdemDeLiberacaoService.#ctor(DataAccess.Context)">
+        <member name="M:Services.Concrete.OrdemDeLiberacaoService.#ctor(DataAccess.Context,AutoMapper.IMapper)">
             <summary>
             Construtor
             </summary>
             <param name="context"></param>
-        </member>
-        <member name="M:Services.Concrete.OrdemDeLiberacaoService.Obter">
-            <summary>
-            Obtém todas as ordens de liberação cadastradas
-            </summary>
-            <returns></returns>
+            <param name="mapper"></param>
         </member>
         <member name="T:Services.Concrete.ProjetoService">
             <summary>
             Serviços relacionados a projetos do Visual Studio
             </summary>
         </member>
-        <member name="M:Services.Concrete.ProjetoService.#ctor(DataAccess.Context)">
+        <member name="M:Services.Concrete.ProjetoService.#ctor(DataAccess.Context,AutoMapper.IMapper)">
             <summary>
             Construtor
             </summary>
             <param name="context"></param>
-        </member>
-        <member name="M:Services.Concrete.ProjetoService.Obter">
-            <summary>
-            Obtém todos os projetos cadastrados
-            </summary>
-            <returns></returns>
+            <param name="mapper"></param>
         </member>
         <member name="T:Services.Concrete.RequisicaoService">
             <summary>
             Serviços relacionados a requisições
             </summary>
         </member>
-        <member name="M:Services.Concrete.RequisicaoService.#ctor(DataAccess.Context)">
+        <member name="M:Services.Concrete.RequisicaoService.#ctor(DataAccess.Context,AutoMapper.IMapper)">
             <summary>
             Construtor
             </summary>
             <param name="context"></param>
+            <param name="mapper"></param>
         </member>
-        <member name="M:Services.Concrete.RequisicaoService.Obter">
+        <member name="M:Services.Concrete.RequisicaoService.Services#Abstract#IRequisicaoService#Obter">
             <summary>
             Obtém todas as requisições
             </summary>
             <returns>Lista de requisições</returns>
         </member>
-        <member name="M:Services.Concrete.RequisicaoService.Inserir(Services.Models.PostRequisicaoModel)">
+        <member name="M:Services.Concrete.RequisicaoService.Services#Abstract#IRequisicaoService#Inserir(Services.Models.PostRequisicaoModel)">
             <summary>
             Cadastra uma nova requisição
             </summary>
@@ -118,17 +109,143 @@
             Serviços relacionados a soluções do Visual Studio
             </summary>
         </member>
-        <member name="M:Services.Concrete.SolucaoService.#ctor(DataAccess.Context)">
+        <member name="M:Services.Concrete.SolucaoService.#ctor(DataAccess.Context,AutoMapper.IMapper)">
             <summary>
-            Construtor 
+            Construtor
             </summary>
             <param name="context"></param>
+            <param name="mapper"></param>
         </member>
-        <member name="M:Services.Concrete.SolucaoService.Obter">
+        <member name="M:Services.Concrete.SolucaoService.Services#Abstract#ISolucaoService#Obter">
             <summary>
             Obtém todas as soluções cadastradas
             </summary>
             <returns>Lista de soluções</returns>
+        </member>
+        <member name="T:Services.Models.GetOrdemDeLiberacaoModel">
+            <summary>
+            Model de Ordem de liberação
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOrdemDeLiberacaoModel.NrOrdemDeLiberacao">
+            <summary>
+            Número da ordem de liberação
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOrdemDeLiberacaoModel.Requisicao">
+            <summary>
+            Requisição a qual a ordem de liberação pertence
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOrdemDeLiberacaoModel.ProjetosAfetados">
+            <summary>
+            Lista de projetos afetados pela ordem de liberação
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetProjetoModel">
+            <summary>
+            Model de projetos do Visual Studio
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetProjetoModel.CdProjeto">
+            <summary>
+            Código do projeto
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetProjetoModel.NmProjeto">
+            <summary>
+            Nome (como aparece no Visual Studio) do projeto
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetProjetoModel.DsProjeto">
+            <summary>
+            Descrição do projeto
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetProjetoModel.Solucao">
+            <summary>
+            Solução (do Visual Studio) à qual o projeto pertence
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetRequisicaoModel">
+            <summary>
+            Model de requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetRequisicaoModel.NrRequisicao">
+            <summary>
+            Número da requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetRequisicaoModel.DsRequisicao">
+            <summary>
+            Descrição da requisção
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetRequisicaoModel.DtSolicitacao">
+            <summary>
+            Data de criação da requisição
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetRequisicaoModel.NmSolicitante">
+            <summary>
+            Nome do solicitante
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetRequisicaoModel.OrdensDeLiberacao">
+            <summary>
+            Ordens de liberação relacionadas à requisição
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetSolucaoModel">
+            <summary>
+            Model de soluções do Visual Studio
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSolucaoModel.CdSolucao">
+            <summary>
+            Código da solução
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSolucaoModel.NmSolucao">
+            <summary>
+            Nome (como aparece no Visual Studio) da solução
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSolucaoModel.DsSolucao">
+            <summary>
+            Descrição da solução
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSolucaoModel.Projetos">
+            <summary>
+            Projetos do Visual Studio contidos na solução 
+            </summary>
+        </member>
+        <member name="T:Services.Models.PostOrdemDeLiberacaoModel">
+            <summary>
+            Model de cadastro de ordem de liberação
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostOrdemDeLiberacaoModel.NrOrdemDeLiberacao">
+            <summary>
+            Número da ordem de liberação
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostOrdemDeLiberacaoModel.ProjetosAfetados">
+            <summary>
+            Lista de ids de projetos afetados
+            </summary>
+        </member>
+        <member name="T:Services.Models.PostProjetoAfetadoModel">
+            <summary>
+            Model de cadastro de projeto afetado
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostProjetoAfetadoModel.CdProjeto">
+            <summary>
+            Código do projeto afetado pela ordem de liberação
+            </summary>
         </member>
         <member name="T:Services.Models.PostRequisicaoModel">
             <summary>
@@ -154,6 +271,65 @@
             <summary>
             Nome do solicitante
             </summary>
+        </member>
+        <member name="P:Services.Models.PostRequisicaoModel.OrdensDeLiberacao">
+            <summary>
+            Lista de ordens de liberação
+            </summary>
+        </member>
+        <member name="T:Services.Util.ApiException">
+            <summary>
+            Exceção customizada para uso interno da api
+            </summary>
+        </member>
+        <member name="P:Services.Util.ApiException.StatusCode">
+            <summary>
+            Status Code
+            </summary>
+        </member>
+        <member name="P:Services.Util.ApiException.ValidationErrors">
+            <summary>
+            Lista de erros de validação a ser mostrada para o usuário
+            </summary>
+        </member>
+        <member name="P:Services.Util.ApiException.LogInfo">
+            <summary>
+            Informação a ser logada
+            </summary>
+        </member>
+        <member name="M:Services.Util.ApiException.#ctor(System.Net.HttpStatusCode)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="statusCode"></param>
+        </member>
+        <member name="M:Services.Util.ApiException.#ctor(System.Net.HttpStatusCode,System.Collections.Generic.List{System.String})">
+            <summary>
+            Construtor
+            </summary>
+            <param name="statusCode"></param>
+            <param name="validationErrors"></param>
+        </member>
+        <member name="M:Services.Util.ApiException.#ctor(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="statusCode"></param>
+            <param name="logInfo"></param>
+        </member>
+        <member name="M:Services.Util.ApiException.#ctor(System.Net.HttpStatusCode,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="statusCode"></param>
+            <param name="validationErrors"></param>
+            <param name="logInfo"></param>
+        </member>
+        <member name="M:Services.Util.ApiException.AddError(System.String)">
+            <summary>
+            Adiciona um erro na lista de erros de validação
+            </summary>
+            <param name="error"></param>
         </member>
     </members>
 </doc>

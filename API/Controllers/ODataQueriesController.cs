@@ -1,8 +1,7 @@
-﻿using DataAccess.Entities;
-using Microsoft.AspNet.OData;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Services.Abstract;
+using Services.Models;
 using System.Linq;
 
 namespace API.Controllers
@@ -40,27 +39,27 @@ namespace API.Controllers
         /// </summary>
         /// <returns></returns>
         [ODataRoute("Requisicoes"), EnableQuery]
-        public ActionResult<IQueryable<Requisicao>> GetRequisicoes() => Ok(requisicaoService.Obter());
+        public IQueryable<GetRequisicaoModel> GetRequisicoes() => requisicaoService.Obter();
 
         /// <summary>
         /// OData a partir dos projetos
         /// </summary>
         /// <returns></returns>
         [ODataRoute("Projetos"), EnableQuery]
-        public ActionResult<IQueryable<Projeto>> GetProjetos() => Ok(projetoService.Obter());
+        public IQueryable<GetProjetoModel> GetProjetos() => projetoService.Obter();
 
         /// <summary>
         /// OData a partir das soluções
         /// </summary>
         /// <returns></returns>
         [ODataRoute("Solucoes"), EnableQuery]
-        public ActionResult<IQueryable<Projeto>> GetSolucoes() => Ok(solucaoService.Obter());
+        public IQueryable<GetSolucaoModel> GetSolucoes() => solucaoService.Obter();
 
         /// <summary>
         /// OData a partir das ordens de liberação
         /// </summary>
         /// <returns></returns>
         [ODataRoute("OrdensDeLiberacao"), EnableQuery]
-        public ActionResult<IQueryable<OrdemDeLiberacao>> GetOrdensDeLiberacao() => Ok(ordemDeLiberacaoService.Obter());
+        public IQueryable<GetOrdemDeLiberacaoModel> GetOrdensDeLiberacao() => ordemDeLiberacaoService.Obter();
     }
 }

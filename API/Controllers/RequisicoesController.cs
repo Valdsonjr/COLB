@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Services.Abstract;
 using Services.Models;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace API.Controllers
@@ -16,17 +17,14 @@ namespace API.Controllers
     public class RequisicoesController : ControllerBase
     {
         private readonly IRequisicaoService requisicaoService;
-        private readonly ILogger<RequisicoesController> logger;
-        private readonly string erro = "Ocorreu um erro inesperado, por favor contacte o administrador do sistema.";
+
         /// <summary>
-        /// 
+        /// Construtor
         /// </summary>
         /// <param name="requisicaoService"></param>
-        /// <param name="logger"></param>
-        public RequisicoesController(IRequisicaoService requisicaoService, ILogger<RequisicoesController> logger)
+        public RequisicoesController(IRequisicaoService requisicaoService)
         {
             this.requisicaoService = requisicaoService;
-            this.logger = logger;
         }
 
         /// <summary>
@@ -35,22 +33,14 @@ namespace API.Controllers
         /// <param name="requisicao"></param>
         /// <returns></returns>
         [HttpPost]
-        [ProducesResponseType(typeof(PostRequisicaoModel), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status409Conflict)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(GetRequisicaoModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status500InternalServerError)]
         public IActionResult Post(PostRequisicaoModel requisicao)
         {
-            try
-            {
-                var retorno = requisicaoService.Inserir(requisicao);
-                return retorno.Either<IActionResult>(e => Conflict(e),
-                                                     o => Created($"{Request.Scheme}://{Request.Host}/odata/Requisicoes?$filter=NrRequisicao eq {o.NrRequisicao}&$top=1", requisicao));
-            }
-            catch (Exception exception)
-            {
-                logger.LogError($"[{MethodBase.GetCurrentMethod().DeclaringType.Name}] - {MethodBase.GetCurrentMethod().Name}", exception.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, erro);
-            }
+            var retorno = requisicaoService.Inserir(requisicao);
+
+            return Created($"{Request.Scheme}://{Request.Host}/odata/Requisicoes?$filter=NrRequisicao eq {retorno.NrRequisicao}&$top=1", retorno);
         }
     }
 }

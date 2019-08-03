@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using AutoMapper;
+using DataAccess;
 using DataAccess.Entities;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
@@ -8,17 +9,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.EventLog;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Services.Abstract;
 using Services.Concrete;
+using Services.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Logging.EventLog;
 
 namespace API
 {
@@ -67,9 +69,9 @@ namespace API
                         new MediaTypeHeaderValue("application/prs.mock-odata"));
                 }
             })
-                    .AddApiExplorer()
-                    .AddJsonFormatters()
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            .AddApiExplorer()
+            .AddJsonFormatters()
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
             {
@@ -89,12 +91,11 @@ namespace API
             services.AddScoped<ISolucaoService, SolucaoService>();
             services.AddScoped<IProjetoService, ProjetoService>();
             services.AddScoped<IOrdemDeLiberacaoService, OrdemDeLiberacaoService>();
+            services.AddSingleton(GetMapper());
 
             services.AddLogging(c => 
             {
-                c.AddDebug();
-                c.AddConsole();
-                //c.AddEventLog(new EventLogSettings { LogName = "COLB Log", SourceName = "COLB Source" });
+                c.AddEventLog(new EventLogSettings { LogName = "COLB", SourceName = "API" });
             });
         }
 
@@ -113,6 +114,8 @@ namespace API
 
             app.UseHttpsRedirection();
 
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -125,19 +128,34 @@ namespace API
             {
                 c.Count().Filter().OrderBy().Expand().Select().MaxTop(100);
                 c.MapODataServiceRoute("odata", "odata", GetEdmModel(app.ApplicationServices));
+                c.EnableDependencyInjection();
             });
         }
 
         private IEdmModel GetEdmModel(IServiceProvider serviceProvider)
         {
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder(serviceProvider);
-            builder.EntitySet<Solucao>("Solucoes").EntityType.HasKey(s => s.CdSolucao);
-            builder.EntitySet<Projeto>("Projetos").EntityType.HasKey(p => p.CdProjeto);
-            builder.EntitySet<Requisicao>("Requisicoes").EntityType.HasKey(r => r.NrRequisicao);
-            builder.EntitySet<OrdemDeLiberacao>("OrdensDeLiberacao").EntityType.HasKey(ol => ol.NrOrdemDeLiberacao);
+            var builder = new ODataConventionModelBuilder(serviceProvider);
 
+            builder.EntitySet<GetSolucaoModel>("Solucoes");
+            builder.EntitySet<GetProjetoModel>("Projetos");
+            builder.EntitySet<GetRequisicaoModel>("Requisicoes");
+            builder.EntitySet<GetOrdemDeLiberacaoModel>("OrdensDeLiberacao");
 
             return builder.GetEdmModel();
+        }
+
+        private IMapper GetMapper()
+        {
+            return new MapperConfiguration(conf =>
+            {
+                conf.CreateMap<OrdemDeLiberacao, GetOrdemDeLiberacaoModel>().ForMember(model => model.ProjetosAfetados, opt => opt.MapFrom(x => x.ProjetosAfetados.Select(y => y.Projeto)));
+                conf.CreateMap<PostOrdemDeLiberacaoModel, OrdemDeLiberacao>();
+                conf.CreateMap<Requisicao, GetRequisicaoModel>();
+                conf.CreateMap<PostRequisicaoModel, Requisicao>();
+                conf.CreateMap<Projeto, GetProjetoModel>();
+                conf.CreateMap<Solucao, GetSolucaoModel>();
+                conf.CreateMap<PostProjetoAfetadoModel, ProjetoAfetado>();
+            }).CreateMapper();
         }
     }
 }

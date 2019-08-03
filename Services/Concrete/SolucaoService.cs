@@ -1,6 +1,8 @@
-﻿using DataAccess;
-using DataAccess.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DataAccess;
 using Services.Abstract;
+using Services.Models;
 using System.Linq;
 
 namespace Services.Concrete
@@ -11,20 +13,23 @@ namespace Services.Concrete
     public class SolucaoService : ISolucaoService
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
         /// <summary>
-        /// Construtor 
+        /// Construtor
         /// </summary>
         /// <param name="context"></param>
-        public SolucaoService(Context context)
+        /// <param name="mapper"></param>
+        public SolucaoService(Context context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         /// <summary>
         /// Obtém todas as soluções cadastradas
         /// </summary>
         /// <returns>Lista de soluções</returns>
-        public IQueryable<Solucao> Obter() => context.Solucoes;
+        IQueryable<GetSolucaoModel> ISolucaoService.Obter() => context.Solucoes.ProjectTo<GetSolucaoModel>(mapper.ConfigurationProvider);
     }
 }

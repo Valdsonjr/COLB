@@ -19,7 +19,7 @@ namespace DataAccess.Entities
 
                 ordemDeLiberacao.HasOne(ol => ol.Requisicao)
                                 .WithMany(r => r.OrdensDeLiberacao)
-                                .HasForeignKey("CD_REQUISICAO")
+                                .HasForeignKey("NR_REQUISICAO")
                                 .IsRequired();
 
                 ordemDeLiberacao.Property(ol => ol.NrOrdemDeLiberacao)

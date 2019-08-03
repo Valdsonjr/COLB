@@ -1,9 +1,13 @@
-﻿using DataAccess;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DataAccess;
 using DataAccess.Entities;
 using Services.Abstract;
 using Services.Models;
 using Services.Util;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Services.Concrete
 {
@@ -13,43 +17,41 @@ namespace Services.Concrete
     public class RequisicaoService : IRequisicaoService
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
         /// <summary>
         /// Construtor
         /// </summary>
         /// <param name="context"></param>
-        public RequisicaoService(Context context)
+        /// <param name="mapper"></param>
+        public RequisicaoService(Context context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         /// <summary>
         /// Obtém todas as requisições
         /// </summary>
         /// <returns>Lista de requisições</returns>
-        public IQueryable<Requisicao> Obter() => context.Requisicoes;
+        IQueryable<GetRequisicaoModel> IRequisicaoService.Obter() => context.Requisicoes.ProjectTo<GetRequisicaoModel>(mapper.ConfigurationProvider);
 
         /// <summary>
         /// Cadastra uma nova requisição
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Result<string, Requisicao> Inserir(PostRequisicaoModel model)
+        GetRequisicaoModel IRequisicaoService.Inserir(PostRequisicaoModel model)
         {
             if (context.Requisicoes.Find(model.NrRequisicao) != null)
-                return new Result<string, Requisicao>("Requisição já cadastrada");
+                throw new ApiException(HttpStatusCode.Conflict, new List<string> { "Requisição já cadastrada" }, $"Requisição já cadastrada: {model.NrRequisicao}");
 
-            var requisicao = new Requisicao
-            {
-                NrRequisicao = model.NrRequisicao,
-                DsRequisicao = model.DsRequisicao,
-                DtSolicitacao = model.DtSolicitacao,
-                NmSolicitante = model.NmSolicitante
-            };
+            var requisicao = mapper.Map<PostRequisicaoModel, Requisicao>(model);
 
             context.Add<Requisicao>(requisicao);
             context.SaveChanges();
-            return new Result<string, Requisicao>(requisicao);
+
+            return mapper.Map<Requisicao, GetRequisicaoModel>(requisicao);
         }
     }
 }

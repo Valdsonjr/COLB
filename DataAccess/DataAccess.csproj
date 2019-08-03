@@ -13,21 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190726032640_Migration_26_07_2019_v1.cs" />
-    <Compile Remove="Migrations\20190726032640_Migration_26_07_2019_v1.Designer.cs" />
-    <Compile Remove="Migrations\20190727122921_27_07_2019_v1.cs" />
-    <Compile Remove="Migrations\20190727122921_27_07_2019_v1.Designer.cs" />
-    <Compile Remove="Migrations\20190727134630_AddSeedData.cs" />
-    <Compile Remove="Migrations\20190727134630_AddSeedData.Designer.cs" />
-    <Compile Remove="Migrations\20190727152841_AddPK2Solucao.cs" />
-    <Compile Remove="Migrations\20190727152841_AddPK2Solucao.Designer.cs" />
-    <Compile Remove="Migrations\20190730223510_Base_Inicial.cs" />
-    <Compile Remove="Migrations\20190730223510_Base_Inicial.Designer.cs" />
-    <Compile Remove="Migrations\20190730225850_Base_Inicial.cs" />
-    <Compile Remove="Migrations\20190730225850_Base_Inicial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
   </ItemGroup>

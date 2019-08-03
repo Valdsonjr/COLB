@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using Services.Models;
 using System.Linq;
 
 namespace Services.Abstract
@@ -12,6 +12,6 @@ namespace Services.Abstract
         /// Serviço de obter soluções
         /// </summary>
         /// <returns></returns>
-        IQueryable<Solucao> Obter();
+        IQueryable<GetSolucaoModel> Obter();
     }
 }

@@ -1,6 +1,8 @@
-﻿using DataAccess;
-using DataAccess.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DataAccess;
 using Services.Abstract;
+using Services.Models;
 using System.Linq;
 
 namespace Services.Concrete
@@ -11,20 +13,19 @@ namespace Services.Concrete
     public class OrdemDeLiberacaoService : IOrdemDeLiberacaoService
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
         /// <summary>
         /// Construtor
         /// </summary>
         /// <param name="context"></param>
-        public OrdemDeLiberacaoService(Context context)
+        /// <param name="mapper"></param>
+        public OrdemDeLiberacaoService(Context context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        /// <summary>
-        /// Obtém todas as ordens de liberação cadastradas
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<OrdemDeLiberacao> Obter() => context.OrdensDeLiberacao;
+        IQueryable<GetOrdemDeLiberacaoModel> IOrdemDeLiberacaoService.Obter() => context.OrdensDeLiberacao.ProjectTo<GetOrdemDeLiberacaoModel>(mapper.ConfigurationProvider);
     }
 }

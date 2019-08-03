@@ -69,12 +69,11 @@
             Endpoints relacionados a requisições de mudanças, incidentes e pequenos projetos.
             </summary>
         </member>
-        <member name="M:API.Controllers.RequisicoesController.#ctor(Services.Abstract.IRequisicaoService,Microsoft.Extensions.Logging.ILogger{API.Controllers.RequisicoesController})">
+        <member name="M:API.Controllers.RequisicoesController.#ctor(Services.Abstract.IRequisicaoService)">
             <summary>
-            
+            Construtor
             </summary>
             <param name="requisicaoService"></param>
-            <param name="logger"></param>
         </member>
         <member name="M:API.Controllers.RequisicoesController.Post(Services.Models.PostRequisicaoModel)">
             <summary>
@@ -93,6 +92,25 @@
             Construtor
             </summary>
             <param name="solucaoService"></param>
+        </member>
+        <member name="T:API.ExceptionMiddleware">
+            <summary>
+            Middleware para tratamento de erros global
+            </summary>
+        </member>
+        <member name="M:API.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="requestDelegate"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:API.ExceptionMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Try-Catch Global
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
         </member>
         <member name="T:API.Program">
             <summary>

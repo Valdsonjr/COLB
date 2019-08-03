@@ -32,7 +32,7 @@ namespace DataAccess.Entities
 
                 requisicao.HasMany(r => r.OrdensDeLiberacao)
                           .WithOne(ol => ol.Requisicao)
-                          .HasForeignKey("CD_REQUISICAO");
+                          .HasForeignKey("NR_REQUISICAO");
 
                 requisicao.Property(r => r.DtSolicitacao)
                           .HasColumnName("DT_SOLICITACAO")

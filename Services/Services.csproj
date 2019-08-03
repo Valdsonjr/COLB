@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -14,10 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\GetOrdemDeLiberacaoModel.cs" />
-    <Compile Remove="Models\GetProjetoModel.cs" />
-    <Compile Remove="Models\GetRequisicaoModel.cs" />
-    <Compile Remove="Models\GetSolucaoModel.cs" />
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
   </ItemGroup>
 
   <ItemGroup>

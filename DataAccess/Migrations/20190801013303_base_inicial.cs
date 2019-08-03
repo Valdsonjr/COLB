@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class Base_Inicial : Migration
+    public partial class base_inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,14 +41,14 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     NR_ORDEM_DE_LIBERACAO = table.Column<long>(nullable: false),
-                    CD_REQUISICAO = table.Column<long>(nullable: false)
+                    NR_REQUISICAO = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_ORDEM_DE_LIBERACAO", x => x.NR_ORDEM_DE_LIBERACAO);
                     table.ForeignKey(
-                        name: "FK_TB_ORDEM_DE_LIBERACAO_TB_REQUISICAO_CD_REQUISICAO",
-                        column: x => x.CD_REQUISICAO,
+                        name: "FK_TB_ORDEM_DE_LIBERACAO_TB_REQUISICAO_NR_REQUISICAO",
+                        column: x => x.NR_REQUISICAO,
                         principalTable: "TB_REQUISICAO",
                         principalColumn: "NR_REQUISICAO",
                         onDelete: ReferentialAction.Cascade);
@@ -137,9 +137,9 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_ORDEM_DE_LIBERACAO_CD_REQUISICAO",
+                name: "IX_TB_ORDEM_DE_LIBERACAO_NR_REQUISICAO",
                 table: "TB_ORDEM_DE_LIBERACAO",
-                column: "CD_REQUISICAO");
+                column: "NR_REQUISICAO");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_PROJETO_CD_SOLUCAO",

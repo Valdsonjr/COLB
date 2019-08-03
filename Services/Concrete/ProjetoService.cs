@@ -1,6 +1,8 @@
-﻿using DataAccess;
-using DataAccess.Entities;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using DataAccess;
 using Services.Abstract;
+using Services.Models;
 using System.Linq;
 
 namespace Services.Concrete
@@ -11,20 +13,19 @@ namespace Services.Concrete
     public class ProjetoService : IProjetoService
     {
         private readonly Context context;
+        private readonly IMapper mapper;
 
         /// <summary>
         /// Construtor
         /// </summary>
         /// <param name="context"></param>
-        public ProjetoService(Context context)
+        /// <param name="mapper"></param>
+        public ProjetoService(Context context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        /// <summary>
-        /// Obtém todos os projetos cadastrados
-        /// </summary>
-        /// <returns></returns>
-        public IQueryable<Projeto> Obter() => context.Projetos;
+        IQueryable<GetProjetoModel> IProjetoService.Obter() => context.Projetos.ProjectTo<GetProjetoModel>(mapper.ConfigurationProvider);
     }
 }

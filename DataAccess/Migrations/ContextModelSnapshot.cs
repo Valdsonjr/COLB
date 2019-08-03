@@ -24,11 +24,11 @@ namespace DataAccess.Migrations
                     b.Property<long>("NrOrdemDeLiberacao")
                         .HasColumnName("NR_ORDEM_DE_LIBERACAO");
 
-                    b.Property<long>("CD_REQUISICAO");
+                    b.Property<long>("NR_REQUISICAO");
 
                     b.HasKey("NrOrdemDeLiberacao");
 
-                    b.HasIndex("CD_REQUISICAO");
+                    b.HasIndex("NR_REQUISICAO");
 
                     b.ToTable("TB_ORDEM_DE_LIBERACAO");
                 });
@@ -166,13 +166,15 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.ProjetoAfetado", b =>
                 {
-                    b.Property<int>("CD_PROJETO");
+                    b.Property<int>("CdProjeto")
+                        .HasColumnName("CD_PROJETO");
 
-                    b.Property<long>("NR_ORDEM_DE_LIBERACAO");
+                    b.Property<long>("NrOrdemDeLiberacao")
+                        .HasColumnName("NR_ORDEM_DE_LIBERACAO");
 
-                    b.HasKey("CD_PROJETO", "NR_ORDEM_DE_LIBERACAO");
+                    b.HasKey("CdProjeto", "NrOrdemDeLiberacao");
 
-                    b.HasIndex("NR_ORDEM_DE_LIBERACAO");
+                    b.HasIndex("NrOrdemDeLiberacao");
 
                     b.ToTable("TB_PROJETO_AFETADO");
                 });
@@ -242,7 +244,7 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataAccess.Entities.Requisicao", "Requisicao")
                         .WithMany("OrdensDeLiberacao")
-                        .HasForeignKey("CD_REQUISICAO")
+                        .HasForeignKey("NR_REQUISICAO")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -258,12 +260,12 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataAccess.Entities.Projeto", "Projeto")
                         .WithMany("ProjetosAfetados")
-                        .HasForeignKey("CD_PROJETO")
+                        .HasForeignKey("CdProjeto")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DataAccess.Entities.OrdemDeLiberacao", "OrdemDeLiberacao")
                         .WithMany("ProjetosAfetados")
-                        .HasForeignKey("NR_ORDEM_DE_LIBERACAO")
+                        .HasForeignKey("NrOrdemDeLiberacao")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

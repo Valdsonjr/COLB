@@ -14,13 +14,13 @@ namespace Services.Abstract
         /// Serviço de obter requisições
         /// </summary>
         /// <returns></returns>
-        IQueryable<Requisicao> Obter();
+        IQueryable<GetRequisicaoModel> Obter();
 
         /// <summary>
         /// Serviço de cadastrar novas requisições
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Result<string, Requisicao> Inserir(PostRequisicaoModel model);
+        GetRequisicaoModel Inserir(PostRequisicaoModel model);
     }
 }

@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Services.Models
 {
     /// <summary>
-    /// Model para cadastro de nova requisição
+    /// Model de requisição
     /// </summary>
-    public class PostRequisicaoModel
+    public class GetRequisicaoModel
     {
         /// <summary>
         /// Número da requisição
         /// </summary>
+        [Key]
         public Int64 NrRequisicao { get; set; }
 
         /// <summary>
-        /// Descrição da requisição
+        /// Descrição da requisção
         /// </summary>
         public String DsRequisicao { get; set; }
 
@@ -29,8 +31,8 @@ namespace Services.Models
         public String NmSolicitante { get; set; }
 
         /// <summary>
-        /// Lista de ordens de liberação
+        /// Ordens de liberação relacionadas à requisição
         /// </summary>
-        public ISet<PostOrdemDeLiberacaoModel> OrdensDeLiberacao { get; set; }
+        public IEnumerable<GetOrdemDeLiberacaoModel> OrdensDeLiberacao { get; set; }
     }
 }

@@ -17,6 +17,7 @@ using Microsoft.OData.Edm;
 using Services.Abstract;
 using Services.Concrete;
 using Services.Models;
+using Services.Util;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -91,7 +92,7 @@ namespace API
             services.AddScoped<ISolucaoService, SolucaoService>();
             services.AddScoped<IProjetoService, ProjetoService>();
             services.AddScoped<IOrdemDeLiberacaoService, OrdemDeLiberacaoService>();
-            services.AddSingleton(GetMapper());
+            services.AddSingleton(MapperProfile.GetMapper());
 
             services.AddLogging(c => 
             {
@@ -142,20 +143,6 @@ namespace API
             builder.EntitySet<GetOrdemDeLiberacaoModel>("OrdensDeLiberacao");
 
             return builder.GetEdmModel();
-        }
-
-        private IMapper GetMapper()
-        {
-            return new MapperConfiguration(conf =>
-            {
-                conf.CreateMap<OrdemDeLiberacao, GetOrdemDeLiberacaoModel>().ForMember(model => model.ProjetosAfetados, opt => opt.MapFrom(x => x.ProjetosAfetados.Select(y => y.Projeto)));
-                conf.CreateMap<PostOrdemDeLiberacaoModel, OrdemDeLiberacao>();
-                conf.CreateMap<Requisicao, GetRequisicaoModel>();
-                conf.CreateMap<PostRequisicaoModel, Requisicao>();
-                conf.CreateMap<Projeto, GetProjetoModel>();
-                conf.CreateMap<Solucao, GetSolucaoModel>();
-                conf.CreateMap<PostProjetoAfetadoModel, ProjetoAfetado>();
-            }).CreateMapper();
         }
     }
 }

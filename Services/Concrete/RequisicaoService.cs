@@ -5,6 +5,7 @@ using DataAccess.Entities;
 using Services.Abstract;
 using Services.Models;
 using Services.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -44,7 +45,18 @@ namespace Services.Concrete
         GetRequisicaoModel IRequisicaoService.Inserir(PostRequisicaoModel model)
         {
             if (context.Requisicoes.Find(model.NrRequisicao) != null)
-                throw new ApiException(HttpStatusCode.Conflict, new List<string> { "Requisição já cadastrada" }, $"Requisição já cadastrada: {model.NrRequisicao}");
+                throw new ApiException(HttpStatusCode.Conflict, $"Requisição já cadastrada: {model.NrRequisicao}");
+
+            var ols = context.OrdensDeLiberacao
+                             .Where(ol => model.OrdensDeLiberacao
+                                               .Select(o => o.NrOrdemDeLiberacao)
+                                               .Contains(ol.NrOrdemDeLiberacao));
+
+            if (ols.Any())
+                throw new ApiException(HttpStatusCode.Conflict, 
+                    $"Ordem(ns) de liberação já cadastrada(s): {String.Join(',', ols.Select(ol => ol.NrOrdemDeLiberacao))}");
+
+            //var pas = model.OrdensDeLiberacao.SelectMany(ol => ol.ProjetosAfetados).Where(pa => pa.CdProjeto)
 
             var requisicao = mapper.Map<PostRequisicaoModel, Requisicao>(model);
 

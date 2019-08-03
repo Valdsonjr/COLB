@@ -292,11 +292,6 @@
             Lista de erros de validação a ser mostrada para o usuário
             </summary>
         </member>
-        <member name="P:Services.Util.ApiException.LogInfo">
-            <summary>
-            Informação a ser logada
-            </summary>
-        </member>
         <member name="M:Services.Util.ApiException.#ctor(System.Net.HttpStatusCode)">
             <summary>
             Construtor
@@ -315,21 +310,24 @@
             Construtor
             </summary>
             <param name="statusCode"></param>
-            <param name="logInfo"></param>
-        </member>
-        <member name="M:Services.Util.ApiException.#ctor(System.Net.HttpStatusCode,System.Collections.Generic.List{System.String},System.String)">
-            <summary>
-            Construtor
-            </summary>
-            <param name="statusCode"></param>
-            <param name="validationErrors"></param>
-            <param name="logInfo"></param>
+            <param name="validationError"></param>
         </member>
         <member name="M:Services.Util.ApiException.AddError(System.String)">
             <summary>
             Adiciona um erro na lista de erros de validação
             </summary>
             <param name="error"></param>
+        </member>
+        <member name="T:Services.Util.MapperProfile">
+            <summary>
+            Classe de configuração do AutoMapper
+            </summary>
+        </member>
+        <member name="M:Services.Util.MapperProfile.GetMapper">
+            <summary>
+            Configuração do AutoMapper
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

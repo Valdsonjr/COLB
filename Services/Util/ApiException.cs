@@ -21,11 +21,6 @@ namespace Services.Util
         public List<String> ValidationErrors { get; }
 
         /// <summary>
-        /// Informação a ser logada
-        /// </summary>
-        public String LogInfo { get; }
-
-        /// <summary>
         /// Construtor
         /// </summary>
         /// <param name="statusCode"></param>
@@ -49,24 +44,11 @@ namespace Services.Util
         /// Construtor
         /// </summary>
         /// <param name="statusCode"></param>
-        /// <param name="logInfo"></param>
-        public ApiException(HttpStatusCode statusCode, String logInfo) : base(logInfo)
+        /// <param name="validationError"></param>
+        public ApiException(HttpStatusCode statusCode, String validationError)
         {
             StatusCode = statusCode;
-            LogInfo = logInfo;
-        }
-
-        /// <summary>
-        /// Construtor
-        /// </summary>
-        /// <param name="statusCode"></param>
-        /// <param name="validationErrors"></param>
-        /// <param name="logInfo"></param>
-        public ApiException(HttpStatusCode statusCode, List<String> validationErrors, String logInfo) : base(logInfo)
-        {
-            StatusCode = statusCode;
-            ValidationErrors = validationErrors;
-            LogInfo = logInfo;
+            ValidationErrors = new List<String> { validationError };
         }
 
         /// <summary>

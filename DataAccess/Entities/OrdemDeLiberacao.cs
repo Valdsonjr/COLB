@@ -17,6 +17,9 @@ namespace DataAccess.Entities
                 ordemDeLiberacao.ToTable("TB_ORDEM_DE_LIBERACAO")
                                 .HasKey(ol => ol.NrOrdemDeLiberacao);
 
+                ordemDeLiberacao.Property<Int64>("NR_REQUISICAO")
+                                .IsRequired();
+
                 ordemDeLiberacao.HasOne(ol => ol.Requisicao)
                                 .WithMany(r => r.OrdensDeLiberacao)
                                 .HasForeignKey("NR_REQUISICAO")

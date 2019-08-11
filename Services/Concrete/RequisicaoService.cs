@@ -2,11 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using DataAccess;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using Services.Abstract;
 using Services.Models;
 using Services.Util;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -56,14 +56,17 @@ namespace Services.Concrete
                 throw new ApiException(HttpStatusCode.Conflict, 
                     $"Ordem(ns) de liberação já cadastrada(s): {String.Join(',', ols.Select(ol => ol.NrOrdemDeLiberacao))}");
 
-            //var pas = model.OrdensDeLiberacao.SelectMany(ol => ol.ProjetosAfetados).Where(pa => pa.CdProjeto)
-
             var requisicao = mapper.Map<PostRequisicaoModel, Requisicao>(model);
 
             context.Add<Requisicao>(requisicao);
             context.SaveChanges();
 
-            return mapper.Map<Requisicao, GetRequisicaoModel>(requisicao);
+            var retorno = context.Requisicoes.Include(r => r.OrdensDeLiberacao)
+                                             .ThenInclude(ol => ol.ProjetosAfetados)
+                                             .ThenInclude(pa => pa.Projeto)
+                                             .SingleOrDefault(r => r.NrRequisicao == model.NrRequisicao);
+
+            return mapper.Map<Requisicao, GetRequisicaoModel>(retorno);
         }
     }
 }

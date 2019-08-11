@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20190801013303_base_inicial")]
-    partial class base_inicial
+    [Migration("20190811011315_BaseInicial")]
+    partial class BaseInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,34 @@ namespace DataAccess.Migrations
                     b.HasIndex("NR_REQUISICAO");
 
                     b.ToTable("TB_ORDEM_DE_LIBERACAO");
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Perfil", b =>
+                {
+                    b.Property<int>("CdPerfil")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CD_PERFIL")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DsPerfil")
+                        .IsRequired()
+                        .HasColumnName("DS_PERFIL");
+
+                    b.HasKey("CdPerfil");
+
+                    b.ToTable("TB_PERFIL");
+
+                    b.HasData(
+                        new
+                        {
+                            CdPerfil = 1,
+                            DsPerfil = "Administrador"
+                        },
+                        new
+                        {
+                            CdPerfil = 2,
+                            DsPerfil = "Funcionário"
+                        });
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Projeto", b =>
@@ -168,15 +196,13 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.ProjetoAfetado", b =>
                 {
-                    b.Property<int>("CdProjeto")
-                        .HasColumnName("CD_PROJETO");
+                    b.Property<int>("CD_PROJETO");
 
-                    b.Property<long>("NrOrdemDeLiberacao")
-                        .HasColumnName("NR_ORDEM_DE_LIBERACAO");
+                    b.Property<long>("NR_ORDEM_DE_LIBERACAO");
 
-                    b.HasKey("CdProjeto", "NrOrdemDeLiberacao");
+                    b.HasKey("CD_PROJETO", "NR_ORDEM_DE_LIBERACAO");
 
-                    b.HasIndex("NrOrdemDeLiberacao");
+                    b.HasIndex("NR_ORDEM_DE_LIBERACAO");
 
                     b.ToTable("TB_PROJETO_AFETADO");
                 });
@@ -242,6 +268,52 @@ namespace DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DataAccess.Entities.Usuario", b =>
+                {
+                    b.Property<int>("CdUsuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CD_USUARIO")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CD_PERFIL");
+
+                    b.Property<string>("DsEmail")
+                        .IsRequired()
+                        .HasColumnName("DS_EMAIL");
+
+                    b.Property<byte[]>("DsSenha")
+                        .IsRequired()
+                        .HasColumnName("DS_SENHA");
+
+                    b.Property<DateTime>("DtCadastro")
+                        .HasColumnName("DT_CADASTRO");
+
+                    b.Property<DateTime>("DtNascimento")
+                        .HasColumnName("DT_NASCIMENTO");
+
+                    b.Property<bool>("FlAtivo")
+                        .HasColumnName("FL_ATIVO");
+
+                    b.Property<string>("NmUsuario")
+                        .IsRequired()
+                        .HasColumnName("NM_USUARIO");
+
+                    b.Property<long>("NrTelefone")
+                        .HasColumnName("NR_TELEFONE");
+
+                    b.HasKey("CdUsuario");
+
+                    b.HasIndex("CD_PERFIL");
+
+                    b.HasIndex("DsEmail")
+                        .IsUnique();
+
+                    b.HasIndex("NrTelefone")
+                        .IsUnique();
+
+                    b.ToTable("TB_USUARIO");
+                });
+
             modelBuilder.Entity("DataAccess.Entities.OrdemDeLiberacao", b =>
                 {
                     b.HasOne("DataAccess.Entities.Requisicao", "Requisicao")
@@ -262,12 +334,20 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataAccess.Entities.Projeto", "Projeto")
                         .WithMany("ProjetosAfetados")
-                        .HasForeignKey("CdProjeto")
+                        .HasForeignKey("CD_PROJETO")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DataAccess.Entities.OrdemDeLiberacao", "OrdemDeLiberacao")
                         .WithMany("ProjetosAfetados")
-                        .HasForeignKey("NrOrdemDeLiberacao")
+                        .HasForeignKey("NR_ORDEM_DE_LIBERACAO")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataAccess.Entities.Usuario", b =>
+                {
+                    b.HasOne("DataAccess.Entities.Perfil", "Perfil")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("CD_PERFIL")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

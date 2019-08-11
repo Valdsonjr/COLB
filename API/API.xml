@@ -4,6 +4,16 @@
         <name>API</name>
     </assembly>
     <members>
+        <member name="T:API.AppSettings">
+            <summary>
+            Configurações
+            </summary>
+        </member>
+        <member name="P:API.AppSettings.Secret">
+            <summary>
+            Segredo
+            </summary>
+        </member>
         <member name="T:API.Controllers.ODataQueriesController">
             <summary>
             Endpoints OData (classe temporária até controllers OData aparecerem no swagger)
@@ -92,6 +102,46 @@
             Construtor
             </summary>
             <param name="solucaoService"></param>
+        </member>
+        <member name="T:API.Controllers.UsuarioController">
+            <summary>
+            Endpoints relacionados ao usuário
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UsuarioController.#ctor(Services.Abstract.IUsuarioService,Microsoft.Extensions.Options.IOptions{API.AppSettings},AutoMapper.IMapper)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="usuarioService"></param>
+            <param name="options"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:API.Controllers.UsuarioController.Post(Services.Models.PostUsuarioModel)">
+            <summary>
+            Cadastra um novo usuário
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.UsuarioController.PostSessao(Services.Models.PostSessaoModel)">
+            <summary>
+            Login
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.UsuarioController.Get">
+            <summary>
+            Obtém as informações do usuário logado
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.UsuarioController.GetById(System.Int32)">
+            <summary>
+            Obtém as informações de um usuário
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="T:API.ExceptionMiddleware">
             <summary>

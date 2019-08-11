@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Services.Models
 {
@@ -12,7 +10,6 @@ namespace Services.Models
         /// <summary>
         /// Código do projeto
         /// </summary>
-        [Key]
         public Int32 CdProjeto { get; set; }
         /// <summary>
         /// Nome (como aparece no Visual Studio) do projeto
@@ -25,7 +22,15 @@ namespace Services.Models
         /// <summary>
         /// Solução (do Visual Studio) à qual o projeto pertence
         /// </summary>
-        [ForeignKey("CdSolucao")]
         public GetSolucaoModel Solucao { get; set; }
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        public GetProjetoModel()
+        {
+            NmProjeto = "";
+            DsProjeto = "";
+            Solucao = new GetSolucaoModel();
+        }
     }
 }

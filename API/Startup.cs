@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using DataAccess;
-using DataAccess.Entities;
+﻿using DataAccess;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.EventLog;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Services.Abstract;
@@ -20,8 +20,10 @@ using Services.Models;
 using Services.Util;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace API
 {
@@ -71,8 +73,11 @@ namespace API
                 }
             })
             .AddApiExplorer()
+            .AddAuthorization()
             .AddJsonFormatters()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<AppSettings>(Configuration.GetSection("Keys"));
 
             services.AddSwaggerGen(c =>
             {
@@ -81,6 +86,40 @@ namespace API
                     Title = "API COLB",
                     Version = "v1",
                     Description = "API pública do projeto de Controle de Ordens de Liberação e Branches"
+                });
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "Header JWT",
+                    In = "header",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    { "Bearer", new string[] { } }
+                });
+
+                c.MapType<PostSessaoModel>(() => new Schema
+                {
+                    Properties = new Dictionary<string, Schema>
+                    {
+                        { "email", new Schema { Type = "string" } },
+                        { "senha", new Schema { Type = "string" } }
+                    }
+                });
+
+                c.MapType<PostUsuarioModel>(() => new Schema
+                {
+                    Properties = new Dictionary<string, Schema>
+                    {
+                        { "nmUsuario", new Schema { Type = "string" } },
+                        { "dsEmail", new Schema { Type = "string" } },
+                        { "nrTelefone", new Schema { Type = "integer", Format = "int64" } },
+                        { "dtNascimento", new Schema { Type = "string", Format = "date-time" } },
+                        { "dsSenha", new Schema { Type = "string" } }
+                    }
                 });
 
                 //Tell Swagger to use those XML comments.
@@ -92,11 +131,29 @@ namespace API
             services.AddScoped<ISolucaoService, SolucaoService>();
             services.AddScoped<IProjetoService, ProjetoService>();
             services.AddScoped<IOrdemDeLiberacaoService, OrdemDeLiberacaoService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddSingleton(MapperProfile.GetMapper());
 
             services.AddLogging(c => 
             {
                 c.AddEventLog(new EventLogSettings { LogName = "COLB", SourceName = "API" });
+            });
+
+            var key = Encoding.ASCII.GetBytes(Configuration["Keys:Secret"]);
+            services.AddAuthentication(x => 
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x => 
+            {
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
             });
         }
 
@@ -116,6 +173,8 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseAuthentication();
 
             app.UseSwagger();
 
@@ -137,10 +196,10 @@ namespace API
         {
             var builder = new ODataConventionModelBuilder(serviceProvider);
 
-            builder.EntitySet<GetSolucaoModel>("Solucoes");
-            builder.EntitySet<GetProjetoModel>("Projetos");
-            builder.EntitySet<GetRequisicaoModel>("Requisicoes");
-            builder.EntitySet<GetOrdemDeLiberacaoModel>("OrdensDeLiberacao");
+            builder.EntitySet<GetSolucaoModel>("Solucoes").EntityType.HasKey(s => s.CdSolucao);
+            builder.EntitySet<GetProjetoModel>("Projetos").EntityType.HasKey(p => p.CdProjeto);
+            builder.EntitySet<GetRequisicaoModel>("Requisicoes").EntityType.HasKey(r => r.NrRequisicao);
+            builder.EntitySet<GetOrdemDeLiberacaoModel>("OrdensDeLiberacao").EntityType.HasKey(ol => ol.NrOrdemDeLiberacao);
 
             return builder.GetEdmModel();
         }

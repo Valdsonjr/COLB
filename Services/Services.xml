@@ -55,6 +55,33 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Services.Abstract.IUsuarioService">
+            <summary>
+            Interface para serviços de usuário
+            </summary>
+        </member>
+        <member name="M:Services.Abstract.IUsuarioService.Autenticar(Services.Util.Email,Services.Util.Password)">
+            <summary>
+            Autentica um usuário
+            </summary>
+            <param name="email"></param>
+            <param name="senha"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Services.Abstract.IUsuarioService.Obter(System.Int32)">
+            <summary>
+            Obtém as informações do usuário
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Services.Abstract.IUsuarioService.Cadastrar(Services.Models.PostUsuarioModel)">
+            <summary>
+            Cadastra um novo usuário
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:Services.Concrete.OrdemDeLiberacaoService">
             <summary>
             Serviços relacionados a ordens de liberação
@@ -122,6 +149,18 @@
             </summary>
             <returns>Lista de soluções</returns>
         </member>
+        <member name="T:Services.Concrete.UsuarioService">
+            <summary>
+            Serviços relacionados ao usuário
+            </summary>
+        </member>
+        <member name="M:Services.Concrete.UsuarioService.#ctor(DataAccess.Context,AutoMapper.IMapper)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="context"></param>
+            <param name="mapper"></param>
+        </member>
         <member name="T:Services.Models.GetOrdemDeLiberacaoModel">
             <summary>
             Model de Ordem de liberação
@@ -140,6 +179,61 @@
         <member name="P:Services.Models.GetOrdemDeLiberacaoModel.ProjetosAfetados">
             <summary>
             Lista de projetos afetados pela ordem de liberação
+            </summary>
+        </member>
+        <member name="M:Services.Models.GetOrdemDeLiberacaoModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetOutroUsuarioModel">
+            <summary>
+            Model para obter informações públicas de um usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOutroUsuarioModel.CdUsuario">
+            <summary>
+            Id do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOutroUsuarioModel.NmUsuario">
+            <summary>
+            Nome do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOutroUsuarioModel.DtNascimento">
+            <summary>
+            Data de nascimento do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetOutroUsuarioModel.Perfil">
+            <summary>
+            Perfil do usuário
+            </summary>
+        </member>
+        <member name="M:Services.Models.GetOutroUsuarioModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetPerfilModel">
+            <summary>
+            Model de perfil do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetPerfilModel.CdPerfil">
+            <summary>
+            Código do perfil
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetPerfilModel.DsPerfil">
+            <summary>
+            Descrição do perfil
+            </summary>
+        </member>
+        <member name="M:Services.Models.GetPerfilModel.#ctor">
+            <summary>
+            Construtor
             </summary>
         </member>
         <member name="T:Services.Models.GetProjetoModel">
@@ -165,6 +259,11 @@
         <member name="P:Services.Models.GetProjetoModel.Solucao">
             <summary>
             Solução (do Visual Studio) à qual o projeto pertence
+            </summary>
+        </member>
+        <member name="M:Services.Models.GetProjetoModel.#ctor">
+            <summary>
+            Construtor
             </summary>
         </member>
         <member name="T:Services.Models.GetRequisicaoModel">
@@ -197,6 +296,41 @@
             Ordens de liberação relacionadas à requisição
             </summary>
         </member>
+        <member name="M:Services.Models.GetRequisicaoModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetSessaoModel">
+            <summary>
+            Model para retorno do login
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSessaoModel.Id">
+            <summary>
+            Id do funcionário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSessaoModel.Nome">
+            <summary>
+            Nome do funcionário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSessaoModel.Token">
+            <summary>
+            Token de acesso
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetSessaoModel.Perfil">
+            <summary>
+            Descrição do perfil do usuário
+            </summary>
+        </member>
+        <member name="M:Services.Models.GetSessaoModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
         <member name="T:Services.Models.GetSolucaoModel">
             <summary>
             Model de soluções do Visual Studio
@@ -222,6 +356,56 @@
             Projetos do Visual Studio contidos na solução 
             </summary>
         </member>
+        <member name="M:Services.Models.GetSolucaoModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Services.Models.GetUsuarioModel">
+            <summary>
+            Model para obter usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.CdUsuario">
+            <summary>
+            Código do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.NmUsuario">
+            <summary>
+            Nome do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.DsEmail">
+            <summary>
+            Email do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.NrTelefone">
+            <summary>
+            Telefone do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.DtCadastro">
+            <summary>
+            Data de cadastro do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.DtNascimento">
+            <summary>
+            Data de nascimento do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.GetUsuarioModel.Perfil">
+            <summary>
+            Perfil do usuário
+            </summary>
+        </member>
+        <member name="M:Services.Models.GetUsuarioModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
         <member name="T:Services.Models.PostOrdemDeLiberacaoModel">
             <summary>
             Model de cadastro de ordem de liberação
@@ -235,6 +419,11 @@
         <member name="P:Services.Models.PostOrdemDeLiberacaoModel.ProjetosAfetados">
             <summary>
             Lista de ids de projetos afetados
+            </summary>
+        </member>
+        <member name="M:Services.Models.PostOrdemDeLiberacaoModel.#ctor">
+            <summary>
+            Construtor
             </summary>
         </member>
         <member name="T:Services.Models.PostProjetoAfetadoModel">
@@ -275,6 +464,66 @@
         <member name="P:Services.Models.PostRequisicaoModel.OrdensDeLiberacao">
             <summary>
             Lista de ordens de liberação
+            </summary>
+        </member>
+        <member name="M:Services.Models.PostRequisicaoModel.#ctor">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Services.Models.PostSessaoModel">
+            <summary>
+            Login
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostSessaoModel.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostSessaoModel.Senha">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="M:Services.Models.PostSessaoModel.#ctor(System.String,System.String)">
+            <summary>
+            Construtor
+            </summary>
+        </member>
+        <member name="T:Services.Models.PostUsuarioModel">
+            <summary>
+            Model para cadastro de usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostUsuarioModel.NmUsuario">
+            <summary>
+            Nome do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostUsuarioModel.DsEmail">
+            <summary>
+            Endereço de e-mail do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostUsuarioModel.NrTelefone">
+            <summary>
+            Número de telefone do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostUsuarioModel.DtNascimento">
+            <summary>
+            Data de nascimento do usuário
+            </summary>
+        </member>
+        <member name="P:Services.Models.PostUsuarioModel.DsSenha">
+            <summary>
+            Senha do usuário
+            </summary>
+        </member>
+        <member name="M:Services.Models.PostUsuarioModel.#ctor(System.String,System.String,System.Int64,System.DateTime,System.String)">
+            <summary>
+            Construtor
             </summary>
         </member>
         <member name="T:Services.Util.ApiException">
@@ -318,6 +567,28 @@
             </summary>
             <param name="error"></param>
         </member>
+        <member name="T:Services.Util.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:Services.Util.Email.Raw">
+            <summary>
+            String do email
+            </summary>
+        </member>
+        <member name="M:Services.Util.Email.#ctor(System.String)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Services.Util.Email.IsValid">
+            <summary>
+            Validações de e-mail
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Services.Util.MapperProfile">
             <summary>
             Classe de configuração do AutoMapper
@@ -328,6 +599,34 @@
             Configuração do AutoMapper
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Services.Util.SenhaBinder">
+            <summary>
+            Model binder para Senha
+            </summary>
+        </member>
+        <member name="M:Services.Util.SenhaBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)">
+            <summary>
+            
+            </summary>
+            <param name="bindingContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Services.Util.Password">
+            <summary>
+            Senha
+            </summary>
+        </member>
+        <member name="P:Services.Util.Password.Raw">
+            <summary>
+            Valor cru
+            </summary>
+        </member>
+        <member name="M:Services.Util.Password.#ctor(System.String)">
+            <summary>
+            Construtor
+            </summary>
+            <param name="value"></param>
         </member>
     </members>
 </doc>

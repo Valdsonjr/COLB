@@ -1,1 +1,0 @@
-New-EventLog -LogName COLB -Source API

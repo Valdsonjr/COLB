@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Services.Util
 {
@@ -27,6 +26,7 @@ namespace Services.Util
         public ApiException(HttpStatusCode statusCode)
         {
             StatusCode = statusCode;
+            ValidationErrors = new List<String>();
         }
 
         /// <summary>

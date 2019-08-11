@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Services.Models
 {
@@ -12,7 +11,6 @@ namespace Services.Models
         /// <summary>
         /// Código da solução
         /// </summary>
-        [Key]
         public Int32 CdSolucao { get; set; }
         /// <summary>
         /// Nome (como aparece no Visual Studio) da solução
@@ -26,5 +24,15 @@ namespace Services.Models
         /// Projetos do Visual Studio contidos na solução 
         /// </summary>
         public IEnumerable<GetProjetoModel> Projetos { get; set; }
+        /// <summary>
+        /// Construtor
+        /// </summary>
+        public GetSolucaoModel()
+        {
+            CdSolucao = 0;
+            NmSolucao = "";
+            DsSolucao = "";
+            Projetos = new List<GetProjetoModel>();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace API
     /// <summary>
     /// Middleware para tratamento de erros global
     /// </summary>
-    public class ExceptionMiddleware
+    internal class ExceptionMiddleware
     {
         private readonly RequestDelegate requestDelegate;
         private readonly ILogger logger;
@@ -41,7 +41,8 @@ namespace API
             }
             catch (ApiException ex)
             {
-                logger.LogWarning(String.Join('\n', ex.ValidationErrors));
+                if (ex.ValidationErrors.Count > 0)
+                    logger.LogWarning(String.Join('\n', ex.ValidationErrors));
 
                 await HandleExceptionAsync(httpContext, ex);
             }

@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Services.Abstract;
 using Services.Models;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -14,6 +13,7 @@ namespace API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RequisicoesController : ControllerBase
     {
         private readonly IRequisicaoService requisicaoService;
@@ -35,12 +35,24 @@ namespace API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(GetRequisicaoModel), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status409Conflict)]
-        [ProducesResponseType(typeof(List<string>), StatusCodes.Status500InternalServerError)]
         public IActionResult Post(PostRequisicaoModel requisicao)
         {
             var retorno = requisicaoService.Inserir(requisicao);
 
-            return Created($"{Request.Scheme}://{Request.Host}/odata/Requisicoes?$filter=NrRequisicao eq {retorno.NrRequisicao}&$top=1", retorno);
+            var ret = new
+            {
+                retorno.NrRequisicao,
+                retorno.DsRequisicao,
+                retorno.DtSolicitacao,
+                retorno.NmSolicitante,
+                OrdensDeLiberacao = retorno.OrdensDeLiberacao.Select(ol => new
+                {
+                    ol.NrOrdemDeLiberacao,
+                    ol.ProjetosAfetados
+                })
+            };
+
+            return Created($"{Request.Scheme}://{Request.Host}/odata/Requisicoes?$filter=NrRequisicao eq {retorno.NrRequisicao}&$top=1", ret);
         }
     }
 }
